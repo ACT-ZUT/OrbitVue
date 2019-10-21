@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.62/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.62/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link rel="Stylesheet" href="arkusz.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>OrbitVue</title>
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+  <script>
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiOGUwMjhlZS05YzJiLTQ2YmYtYjg1Mi00MzMyNmU5ZDZmZTEiLCJpZCI6MTcwMTIsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1NzE0NzYwMDd9.Ht7a2s7PMmQAofzGGH6HE7A2U4eJMu9EXPkQ9r-wdVc';
+    var clock = new Cesium.Clock({
+   tartTime : Cesium.JulianDate.fromIso8601('2019-10-19'),
+   currentTime : Cesium.JulianDate.fromIso8601('2019-10-19'),
+   stopTime : Cesium.JulianDate.fromIso8601('2019-10-20'),
+   clockRange : Cesium.ClockRange.LOOP_STOP, // loop when we hit the end time
+  
+   clockStep : Cesium.ClockStep.SYSTEM_CLOCK_MULTIPLIER,
+   multiplier : 1, // how much time to advance each tick
+   shouldAnimate : true // Animation on by default
+});
+    
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+        terrainProvider: Cesium.createWorldTerrain(),
+        shouldAnimate : true
+    });
+    var dataSource = Cesium.CzmlDataSource.load('https://github.com/RabataCebulowa/RabataCebulowa.github.io/raw/master/simple.czml');
+    viewer.dataSources.add(dataSource)
+    var tileset = viewer.scene.primitives.add(
+        new Cesium.Cesium3DTileset({
+            url: Cesium.IonResource.fromAssetId(your_asset_id)
+        })
+    );
+    viewer.zoomTo(tileset);
+    viewer.scene.globe.enableLighting = true;
+  </script>
+</body>
+</html>
